@@ -2,7 +2,13 @@ const preEls = document.querySelectorAll("pre");
 
 [...preEls].forEach((preEl) => {
     const root = document.createElement("div");
+
+    root.style.position = "relative";
     const shadowRoot = root.attachShadow({ mode: "open" });
+
+    const cssUrl = chrome.runtime.getURL("content-script.css");
+
+    shadowRoot.innerHTML = `<link rel="stylesheet" href=${cssUrl}></link>`;
 
     const button = document.createElement("button");
     button.innerText = "Copy"
