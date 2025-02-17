@@ -21,6 +21,19 @@ const preEls = document.querySelectorAll("pre");
     const codeEl = preEl.querySelector("code");
 
     button.addEventListener("click", () => {
-        navigator.clipboard.writeText(codeEl.innerText);
+        navigator.clipboard.writeText(codeEl.innerText).then(()=>{
+            notify()
+        });
     });
 });
+
+function notify() {
+    const scriptEl = document.createElement("script");
+    scriptEl.src = chrome.runtime.getURL("execute.js");
+
+    document.body.appendChild(scriptEl);
+
+    scriptEl.onload = () => {
+        scriptEl.remove();
+    };
+}
