@@ -1,8 +1,9 @@
 {
-  "name": "CopyPaster",
+  "name": "__MSG_name__",
   "version": "1.0.0",
   "manifest_version": 3,
-  "description": "Copy faster from stackoverflow",
+  "default_locale": "en",
+  "description": "__MSG_description__",
   "icons": {
     "32": "./icons/icon-32.png",
     "64": "./icons/icon-64.png",
