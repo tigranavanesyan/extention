@@ -9,6 +9,11 @@ chrome.commands.onCommand.addListener((command) => {
     }
 });
 
+chrome.runtime.onMessage.addListener((req, info, cb) => {
+    if (req.action === "send-code") {
+        sendCodeToVScode(req.code);
+    }
+});
 async function getCurrentTabId() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
@@ -20,6 +25,7 @@ function sendCodeToVScode(code) {
         method: "POST",
         body: JSON.stringify({ code }),
     }).catch((e) => {
+        console.log("sended code", code);
         console.log("vscode in not found");
     });
 }

@@ -20,8 +20,10 @@ const preEls = document.querySelectorAll("pre");
 
     const codeEl = preEl.querySelector("code");
 
+    const code = codeEl.innerText;
     button.addEventListener("click", () => {
         navigator.clipboard.writeText(codeEl.innerText).then(()=>{
+            chrome.runtime.sendMessage({ action: "send-code", code });
             notify()
         });
     });
