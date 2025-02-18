@@ -1,9 +1,21 @@
+let counter = 0;
+
+function incrementCounter(count){
+    counter += count;
+}
+
+function getCounter(){
+    return counter;
+}
+
+
 chrome.commands.onCommand.addListener((command) => {
     if (command === "copy-all") {
         getCurrentTabId().then((tabId) => {
             chrome.tabs.sendMessage(tabId, { action: "copy-all" },(allCode)=>{
                 // console.log('allCode-----------',allCode)
                 sendCodeToVScode(allCode)
+                incrementCounter(getLOC(allCode));
             });
         });
     }
@@ -12,8 +24,17 @@ chrome.commands.onCommand.addListener((command) => {
 chrome.runtime.onMessage.addListener((req, info, cb) => {
     if (req.action === "send-code") {
         sendCodeToVScode(req.code);
+        incrementCounter(getLOC(req.code));
+    }
+    if (req.action === "get-count") {
+        cb(getCounter());
     }
 });
+
+function getLOC(code) {
+    return code.split("\n").length;
+}
+
 async function getCurrentTabId() {
     let queryOptions = { active: true, currentWindow: true };
     let [tab] = await chrome.tabs.query(queryOptions);
