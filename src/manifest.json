@@ -17,6 +17,7 @@
       "js": ["content-script.js"]
     }
   ],
+  "permissions": ["storage"],
   "host_permissions": ["https://stackoverflow.com/*"],
   "web_accessible_resources": [
     {

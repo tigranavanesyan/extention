@@ -7,8 +7,8 @@ function render({ count }) {
   title.innerText = `LOC: ${count}`;
 }
 
-// chrome.storage.onChanged.addListener(({ counter }) => {
-//   if (counter) {
-//     render({ count: counter.newValue });
-//   }
-// });
+chrome.storage.onChanged.addListener(({ counter }) => {
+  if (counter) {
+    render({ count: counter.newValue });
+  }
+});

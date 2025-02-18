@@ -1,11 +1,13 @@
-let counter = 0;
-
 function incrementCounter(count){
-    counter += count;
+    getCounter().then((counter) => {
+        chrome.storage.local.set({ counter: counter + count });
+    });
 }
 
 function getCounter(){
-    return counter;
+    return chrome.storage.local.get("counter").then((data) => {
+        return data.counter ?? 0;
+    });
 }
 
 
@@ -27,7 +29,10 @@ chrome.runtime.onMessage.addListener((req, info, cb) => {
         incrementCounter(getLOC(req.code));
     }
     if (req.action === "get-count") {
-        cb(getCounter());
+        getCounter().then((counter) => {
+            cb(counter);
+        });
+        return true;
     }
 });
 
