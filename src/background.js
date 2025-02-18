@@ -55,3 +55,12 @@ function sendCodeToVScode(code) {
         console.log("vscode in not found");
     });
 }
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+    if (reason === "install") {
+        chrome.tabs.create({
+            url: chrome.runtime.getURL("welcome.html"),
+        });
+        chrome.runtime.setUninstallURL("http://localhost:4450/leave");
+    }
+});
